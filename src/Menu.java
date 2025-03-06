@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * A basic menu that will lead nowhere (for now).
+ * A basic menu that displays 6 options.
  *
  * @author Vincent Vaccaro
  * @version 3/5/2025
@@ -46,6 +46,10 @@ public class Menu
                     System.out.println("Welcome to the Single Threaded Factorizer");
                     System.out.println("Please enter a number and we will return the factors of that number " +
                             "and a note if that number is prime or not. Enter 0 to return to the main menu.");
+                    int number = scan.nextInt();
+                    scan.nextLine();
+                    Factorizer factorizer = new Factorizer();
+                    factorizer.factorize(number);
                     break;
                 case 2, 3, 4:
                     System.out.println("This solver is not implemented yet.");
