@@ -3,10 +3,8 @@ package MainMenu;
 import java.util.HashMap;
 import java.util.Map;
 
-import MainMenu.FactorizationResult;
-
 /**
- * MainMenu.Factorizer system that will factorize numbers.
+ * Factorizer system that will factorize numbers.
  * It will display the factors of the number given.
  * It will also display whether the number is prime or not.
  *
@@ -15,9 +13,14 @@ import MainMenu.FactorizationResult;
  */
 public class Factorizer
 {
-    private Map<Integer, FactorizationResult> factorizationResults = new HashMap<>();
-    private Map<Integer, FactorizationResult> factorizationCache = new HashMap<>();
+    /**
+     * Cache to store the factorization results for numbers
+     */
+    private final Map<Integer, FactorizationResult> factorizationCache = new HashMap<>();
 
+    /**
+     * Precompute the factorization of numbers from 2 to 100000.
+     */
     public void precomputeFactorization()
     {
         for(int i = 2; i <= 100000; i++)
@@ -27,6 +30,11 @@ public class Factorizer
         }
     }
 
+    /**
+     * Prints the factors of a given number and whether it is prime or not.
+     *
+     * @param number the number to factorize
+     */
     public void factorize(int number)
     {
         if(factorizationCache.containsKey(number))
@@ -37,6 +45,12 @@ public class Factorizer
         }
     }
 
+    /**
+     * Returns the factors of a given number and whether it is prime or not.
+     *
+     * @param number, the number to factorize
+     * @return a FactorizationResult that contains the factors and whether the number is prime or not
+     */
     private FactorizationResult getFactors(int number)
     {
         StringBuilder factors = new StringBuilder();

@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 /**
  * A basic menu that displays 6 options.
+ * For now, only option 1, 5, and 0 are functional.
  *
  * @author Vincent Vaccaro
  * @version 3/5/2025
@@ -16,9 +17,9 @@ public class Menu
      */
     public static void main(String[] args)
     {
-        //Scanner for user input
         Scanner scan = new Scanner(System.in);
         int choice;
+        long runtime = 0;
 
         //Menu
         System.out.println("Welcome, User!");
@@ -32,7 +33,6 @@ public class Menu
 
         do
         {
-            //while loop to catch if the user's input is an invalid integer
             while(!scan.hasNextInt())
             {
                 scan.nextLine();
@@ -41,17 +41,22 @@ public class Menu
 
             choice = Integer.parseInt(scan.nextLine());
 
-            //switch statements to handle user's input
             switch(choice)
             {
                 case 1:
                     Factorizer factorizer = new Factorizer();
+                    long startTime = System.nanoTime();
                     factorizer.precomputeFactorization();   //I have this set to run first so that when the text pops up, the user will know to type in their appropriate input
+                    long endTime = System.nanoTime();
+
+                    runtime = endTime - startTime;
+
                     System.out.println("Welcome to the Single Threaded Factorizer");
                     System.out.println("Please enter a number and we will return the factors of that number " +
                             "and a note if that number is prime or not. Enter 0 to return to the main menu.");
                     System.out.print("Number: ");
                     boolean continueInput = true;
+
                     while(continueInput)
                     {
                         String input = scan.nextLine();
@@ -82,7 +87,7 @@ public class Menu
                     System.out.println("This solver is not implemented yet.");
                     break;
                 case 5:
-                    System.nanoTime();
+                    System.out.println("Runtime: " + (runtime / 1e9) + " seconds ");
                     break;
                 case 0:
                     System.out.println("Goodbye!");
@@ -92,15 +97,13 @@ public class Menu
                     break;
             }
 
-            //will probably remove later
+            //will most likely remove later
             //if user enters 2, 3, or 4, exit
             if(choice >= 2 && choice <= 4)
             {
                 System.exit(0);
             }
         }
-
-        //if user enters 0, exit
         while(choice != 0);
     }
 }
