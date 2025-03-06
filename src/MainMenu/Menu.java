@@ -1,3 +1,5 @@
+package MainMenu;
+
 import java.util.Scanner;
 
 /**
@@ -43,13 +45,38 @@ public class Menu
             switch(choice)
             {
                 case 1:
+                    Factorizer factorizer = new Factorizer();
+                    factorizer.precomputeFactorization();   //I have this set to run first so that when the text pops up, the user will know to type in their appropriate input
                     System.out.println("Welcome to the Single Threaded Factorizer");
                     System.out.println("Please enter a number and we will return the factors of that number " +
                             "and a note if that number is prime or not. Enter 0 to return to the main menu.");
-                    int number = scan.nextInt();
-                    scan.nextLine();
-                    Factorizer factorizer = new Factorizer();
-                    factorizer.factorize(number);
+                    System.out.print("Number: ");
+                    boolean continueInput = true;
+                    while(continueInput)
+                    {
+                        String input = scan.nextLine();
+                        int number = Integer.parseInt(input);
+                        if(number == 0)
+                        {
+                            continueInput = false;
+                            System.out.println("Welcome back, User!");
+                            System.out.println("1) Single Threaded Solver");
+                            System.out.println("2) Executor Solver");
+                            System.out.println("3) Stream Solver");
+                            System.out.println("4) Distributed Solver");
+                            System.out.println("5) Timer");
+                            System.out.println("0) Quit");
+                            System.out.print("Enter your choice: ");
+                        }
+                        else if(number < 2 || number > 100000)
+                        {
+                            System.out.println("Invalid input. Please enter a number between 2 and 100000.");
+                        }
+                        else
+                        {
+                            factorizer.factorize(number);
+                        }
+                    }
                     break;
                 case 2, 3, 4:
                     System.out.println("This solver is not implemented yet.");
