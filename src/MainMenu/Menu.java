@@ -1,5 +1,6 @@
 package MainMenu;
 
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -83,7 +84,38 @@ public class Menu
                         }
                     }
                     break;
-                case 2, 3, 4:
+                case 2:
+                    System.out.println("Welcome to the Executor Factorizer");
+                    System.out.println("Please enter a number and we will return the factors of that number. " +
+                                       "Enter 0 to return to the main menu.");
+                    System.out.print("Number: ");
+                    continueInput = true;
+
+                    while(continueInput)
+                    {
+                        String input = scan.nextLine();
+                        int number = Integer.parseInt(input);
+                        List<Integer> factors = Executor.factorize(number);
+
+                        if(number == 0)
+                        {
+                            continueInput = false;
+                            System.out.println("Welcome back, User!");
+                            System.out.println("1) Single Threaded Solver");
+                            System.out.println("2) Executor Solver");
+                            System.out.println("3) Stream Solver");
+                            System.out.println("4) Distributed Solver");
+                            System.out.println("5) Timer");
+                            System.out.println("0) Quit");
+                            System.out.print("Enter your choice: ");
+                        }
+                        else
+                        {
+                            System.out.println("Factors: " + factors);
+                        }
+                    }
+                    break;
+                case 3, 4:
                     System.out.println("This solver is not implemented yet.");
                     break;
                 case 5:

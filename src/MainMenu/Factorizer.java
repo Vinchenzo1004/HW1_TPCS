@@ -1,7 +1,10 @@
 package MainMenu;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Factorizer system that will factorize numbers.
@@ -34,12 +37,20 @@ public class Factorizer
      * Prints the factors of a given number and whether it is prime or not.
      *
      * @param number the number to factorize
+     * @throws IllegalArgumentException if the number is negative
+     * @return the factors of the given number and whether it is prime or not
      */
     public void factorize(int number)
     {
         if(factorizationCache.containsKey(number))
         {
             FactorizationResult result = factorizationCache.get(number);
+            System.out.println("Factors: " + result.getFactors());
+            System.out.println("Prime: " + result.isPrime());
+        }
+        else
+        {
+            FactorizationResult result = getFactors(number);
             System.out.println("Factors: " + result.getFactors());
             System.out.println("Prime: " + result.isPrime());
         }
@@ -53,21 +64,35 @@ public class Factorizer
      */
     private FactorizationResult getFactors(int number)
     {
-        StringBuilder factors = new StringBuilder();
+        List<Integer> factors = new ArrayList<>();
         boolean isPrime = true;
 
-        for(int i = 1; i <= number; i++)
+        for(int i = 1; i <= Math.sqrt(number); i++)
         {
             if(number % i == 0)
             {
-                factors.append(i).append(" ");
+                factors.add(i);
 
                 if(i != 1 && i != number)
                 {
                     isPrime = false;
                 }
+
+                if(i != number / i)
+                {
+                    factors.add(number / i);
+                }
             }
         }
+
+        Collections.sort(factors);
+
+        StringBuilder factorString = new StringBuilder();
+        for(Integer factor : factors)
+        {
+            factorString.append(factor).append(" ");
+        }
+
         return new FactorizationResult(factors.toString(), isPrime);
     }
 }
