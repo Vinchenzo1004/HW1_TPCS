@@ -115,7 +115,37 @@ public class Menu
                         }
                     }
                     break;
-                case 3, 4:
+                case 3:
+                    System.out.println("Welcome to the Stream Factorizer");
+                    System.out.println("Please enter a number and we will return the factors of that number. " +
+                            "Enter 0 to return to the main menu.");
+                    System.out.print("Number: ");
+                    continueInput = true;
+
+                    while(continueInput)
+                    {
+                        int number = Integer.parseInt(scan.nextLine());
+                        List<Integer> factors = Stream.factorize(number);
+
+                        if(number == 0)
+                        {
+                            continueInput = false;
+                            System.out.println("Welcome back, User!");
+                            System.out.println("1) Single Threaded Solver");
+                            System.out.println("2) Executor Solver");
+                            System.out.println("3) Stream Solver");
+                            System.out.println("4) Distributed Solver");
+                            System.out.println("5) Timer");
+                            System.out.println("0) Quit");
+                            System.out.print("Enter your choice: ");
+                        }
+                        else
+                        {
+                            System.out.println("Factors: " + factors);
+                        }
+                    }
+                    break;
+                case 4:
                     System.out.println("This solver is not implemented yet.");
                     break;
                 case 5:
@@ -130,7 +160,7 @@ public class Menu
             }
 
             //will most likely remove later
-            //if user enters 2, 3, or 4, exit
+            //if user enters 4, exit
             if(choice >= 2 && choice <= 4)
             {
                 System.exit(0);
