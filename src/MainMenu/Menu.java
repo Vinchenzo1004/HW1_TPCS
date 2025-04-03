@@ -2,6 +2,9 @@ package MainMenu;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * A basic menu that displays 6 options.
@@ -87,7 +90,7 @@ public class Menu
                 case 2:
                     System.out.println("Welcome to the Executor Factorizer");
                     System.out.println("Please enter a number and we will return the factors of that number. " +
-                                       "Enter 0 to return to the main menu.");
+                            "Enter 0 to return to the main menu.");
                     System.out.print("Number: ");
                     continueInput = true;
 
@@ -146,7 +149,47 @@ public class Menu
                     }
                     break;
                 case 4:
-                    System.out.println("This solver is not implemented yet.");
+                    System.out.println("Welcome to the Distributed Factorizer");
+                    System.out.println("Please enter a number and we will return the factors of that number. " +
+                            "Enter 0 to return to the main menu.");
+                    System.out.print("Number: ");
+                    continueInput = true;
+
+                    while(continueInput)
+                    {
+                        int number = Integer.parseInt(scan.nextLine());
+                        ExecutorService executor = Executors.newSingleThreadExecutor();
+                        Future<List<Integer>> future = executor.submit(new Distributed.FactorizerTask(number));
+
+                        if(number == 0)
+                        {
+                            continueInput = false;
+                            System.out.println("Welcome back, User!");
+                            System.out.println("1) Single Threaded Solver");
+                            System.out.println("2) Executor Solver");
+                            System.out.println("3) Stream Solver");
+                            System.out.println("4) Distributed Solver");
+                            System.out.println("5) Timer");
+                            System.out.println("0) Quit");
+                            System.out.print("Enter your choice: ");
+                        }
+                        else
+                        {
+                            try
+                            {
+                                List<Integer> factors = future.get();
+                                System.out.println("Factors: " + factors);
+                            }
+                            catch(Exception e)
+                            {
+                                System.err.println("Error calculating factors: " + e.getMessage());
+                            }
+                            finally
+                            {
+                                executor.shutdown();
+                            }
+                        }
+                    }
                     break;
                 case 5:
                     System.out.println("Runtime: " + (runtime / 1e9) + " seconds ");
@@ -157,13 +200,6 @@ public class Menu
                 default:
                     System.out.print("Invalid Input. Please enter a different value: ");
                     break;
-            }
-
-            //will most likely remove later
-            //if user enters 4, exit
-            if(choice >= 2 && choice <= 4)
-            {
-                System.exit(0);
             }
         }
         while(choice != 0);
