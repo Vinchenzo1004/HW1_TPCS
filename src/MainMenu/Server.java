@@ -7,15 +7,28 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+/**
+ * A simple server that listens for incoming connections and calculates the factors of a number.
+ * It uses a thread pool to handle multiple requests concurrently.
+ * 
+ * @author Vincent Vaccaro
+ * @version 4/3/2025
+ */
 public class Server
 {
     private static final int NUM_THREADS = 5;
     private static final int PORT = 8000;
 
+    /**
+     * Main method to start the server and listen for incoming connections.
+     * 
+     * @param args command line arguments
+     * @throws IOException if an error occurs while starting the server
+     */
     public static void main(String[] args) throws IOException
     {
-        ServerSocket serverSocket = new ServerSocket(8000);
-        ExecutorService executor = Executors.newFixedThreadPool(5);
+        ServerSocket serverSocket = new ServerSocket(PORT);
+        ExecutorService executor = Executors.newFixedThreadPool(NUM_THREADS);
 
         while(true)
         {
@@ -24,15 +37,26 @@ public class Server
         }
     }
 
+    /**
+     * A task that handles the factorization of a number received from a client.
+     */
     private static class FactorTask implements Runnable
     {
         private final Socket socket;
 
+        /**
+         * Constructor that initializes the socket for the task.
+         * 
+         * @param socket the socket to handle
+         */
         public FactorTask(Socket socket)
         {
             this.socket = socket;
         }
 
+        /**
+         * The run method that performs the factorization and sends the result back to the client.
+         */
         @Override
         public void run()
         {

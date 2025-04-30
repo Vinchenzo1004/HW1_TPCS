@@ -1,45 +1,42 @@
 package MainMenu;
 
+import java.util.*;
+
 /**
  * Stores the result of a factorization operation.
  *
  * @author Vincent Vaccaro
  * @version 3/6/2025
  */
-public class FactorizationResult
+public class FactorizationResult 
 {
-    private String factors;
-    private boolean isPrime;
+    private final Map<Integer,List<Integer>> map = new HashMap<>();
 
-    /**
-     * Constructs a FactorizationResult with the given factors and prime status.
-     *
-     * @param factors a string representing the factors of a number
-     * @param isPrime a boolean indicating whether the number is prime
-     */
-    public FactorizationResult(String factors, boolean isPrime)
+    public void put(int n, List<Integer> factors) 
     {
-        this.factors = factors;
-        this.isPrime = isPrime;
+        map.put(n, factors);
+    }
+    public List<Integer> getFactors(int n) 
+    {
+        return map.getOrDefault(n, Collections.emptyList());
     }
 
-    /**
-     * Gets the string representation of the factors of a number.
-     *
-     * @return a string containing the factors of a number
-     */
-    public String getFactors()
+    // Optional helper if you want to return list of entries
+    public static class Entry 
     {
-        return factors;
-    }
-
-    /**
-     * Checks if the number is prime.
-     *
-     * @return true if the number is prime, false otherwise
-     */
-    public boolean isPrime()
-    {
-        return isPrime;
+        private final int number;
+        private final List<Integer> factors;
+        public Entry(int number, List<Integer> factors) 
+        {
+            this.number = number; this.factors = factors;
+        }
+        public int getNumber() 
+        { 
+            return number; 
+        }
+        public List<Integer> getFactors() 
+        { 
+            return factors; 
+        }
     }
 }
